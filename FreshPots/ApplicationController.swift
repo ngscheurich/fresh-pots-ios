@@ -12,7 +12,7 @@ import Turbolinks
 
 class ApplicationController: UINavigationController {
     
-    fileprivate let url = URL(string: "https://www.freshpotsapp.com/")!
+    fileprivate let url = URL(string: "https://www.freshpotsapp.com")!
     fileprivate let webViewProcessPool = WKProcessPool()
     
     fileprivate var application: UIApplication {
@@ -45,14 +45,16 @@ class ApplicationController: UINavigationController {
     
     fileprivate func presentVisitableForSession(_ session: Session, url: URL, action: Action = .Advance) {
         let visitable = ViewController(url: url)
+        let preLoginURLs = ["", "/users/sign_up", "users/sign_in", "/signup", "/login"]
+        let isPreLogin = preLoginURLs.contains(url.relativePath)
         let isDashboard = url.relativeString.contains("dashboard")
         let isBrewForm = url.relativeString.contains("brews/new")
-
+        
         if (isDashboard) {
             visitable.navigationItem.hidesBackButton = true
         }
        
-        if (!isBrewForm) {
+        if (!isBrewForm && !isPreLogin) {
             createAddButton(viewController: visitable)
         }
 
@@ -76,7 +78,7 @@ class ApplicationController: UINavigationController {
     }
     
     @objc func visitNewBrewURL() {
-        let url = Foundation.URL(string: "http://localhost:3000/brews/new")
+        let url = Foundation.URL(string: "\(self.url)/brews/new")
         presentVisitableForSession(session, url: url!)
     }
 }
