@@ -12,7 +12,7 @@ import Turbolinks
 
 class ApplicationController: UINavigationController {
     
-    fileprivate let url = URL(string: "http://localhost:3000")!
+    fileprivate let url = URL(string: "https://www.freshpotsapp.com/")!
     fileprivate let webViewProcessPool = WKProcessPool()
     
     fileprivate var application: UIApplication {
